@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AidCare The Rise Of The Aid", "AidCare The Rise Of The Aid\AidCare The Rise Of The Aid.csproj", "{B8BD0904-A96A-43ED-BF1A-E44CEA2EB90C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8BD0904-A96A-43ED-BF1A-E44CEA2EB90C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8BD0904-A96A-43ED-BF1A-E44CEA2EB90C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8BD0904-A96A-43ED-BF1A-E44CEA2EB90C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8BD0904-A96A-43ED-BF1A-E44CEA2EB90C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7336C185-EAB0-4A9F-849E-97815F65BE72}
+	EndGlobalSection
+EndGlobal
