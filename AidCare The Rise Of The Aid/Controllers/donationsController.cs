@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AidCare_The_Rise_Of_The_Aid.Areas.Identity.Data;
 using AidCare_The_Rise_Of_The_Aid.Models;
 
-namespace AidCare_The_Rise_Of_The_Aid.Views
+namespace AidCare_The_Rise_Of_The_Aid.Controllers
 {
     public class donationsController : Controller
     {
@@ -36,7 +36,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
             }
 
             var donation = await _context.donation
-                .FirstOrDefaultAsync(m => m.DonationId == id);
+                .FirstOrDefaultAsync(m => m.donationId == id);
             if (donation == null)
             {
                 return NotFound();
@@ -56,9 +56,9 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DonationId,DonationDescription,DonationAmount")] donation donation)
+        public async Task<IActionResult> Create([Bind("donationId,DonationDescription,DonationAmount")] donation donation)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(donation);
                 await _context.SaveChangesAsync();
@@ -88,14 +88,14 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("DonationId,DonationDescription,DonationAmount")] donation donation)
+        public async Task<IActionResult> Edit(int id, [Bind("donationId,DonationDescription,DonationAmount")] donation donation)
         {
-            if (id != donation.DonationId)
+            if (id != donation.donationId)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
@@ -104,7 +104,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!donationExists(donation.DonationId))
+                    if (!donationExists(donation.donationId))
                     {
                         return NotFound();
                     }
@@ -127,7 +127,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
             }
 
             var donation = await _context.donation
-                .FirstOrDefaultAsync(m => m.DonationId == id);
+                .FirstOrDefaultAsync(m => m.donationId == id);
             if (donation == null)
             {
                 return NotFound();
@@ -157,7 +157,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
 
         private bool donationExists(int id)
         {
-          return (_context.donation?.Any(e => e.DonationId == id)).GetValueOrDefault();
+          return (_context.donation?.Any(e => e.donationId == id)).GetValueOrDefault();
         }
     }
 }

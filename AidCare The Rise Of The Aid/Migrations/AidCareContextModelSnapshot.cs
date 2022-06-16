@@ -89,11 +89,11 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
 
             modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.donation", b =>
                 {
-                    b.Property<int>("DonationId")
+                    b.Property<int>("donationId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DonationId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("donationId"), 1L, 1);
 
                     b.Property<int>("DonationAmount")
                         .HasColumnType("int");
@@ -102,7 +102,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("DonationId");
+                    b.HasKey("donationId");
 
                     b.ToTable("donation");
                 });
@@ -142,9 +142,6 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DonationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -153,9 +150,12 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("donationId")
+                        .HasColumnType("int");
+
                     b.HasKey("memberId");
 
-                    b.HasIndex("DonationId");
+                    b.HasIndex("donationId");
 
                     b.ToTable("member");
                 });
@@ -301,7 +301,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                 {
                     b.HasOne("AidCare_The_Rise_Of_The_Aid.Models.donation", null)
                         .WithMany("member")
-                        .HasForeignKey("DonationId");
+                        .HasForeignKey("donationId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

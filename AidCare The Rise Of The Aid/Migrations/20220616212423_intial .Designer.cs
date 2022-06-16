@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AidCare_The_Rise_Of_The_Aid.Migrations
 {
     [DbContext(typeof(AidCareContext))]
-    [Migration("20220616065205_identity")]
-    partial class identity
+    [Migration("20220616212423_intial ")]
+    partial class intial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,6 +87,79 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.donation", b =>
+                {
+                    b.Property<int>("donationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("donationId"), 1L, 1);
+
+                    b.Property<int>("DonationAmount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DonationDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("donationId");
+
+                    b.ToTable("donation");
+                });
+
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.Event", b =>
+                {
+                    b.Property<int>("EventId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"), 1L, 1);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EventLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EventName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EventId");
+
+                    b.ToTable("Event");
+                });
+
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.member", b =>
+                {
+                    b.Property<int>("memberId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("memberId"), 1L, 1);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("donationId")
+                        .HasColumnType("int");
+
+                    b.HasKey("memberId");
+
+                    b.HasIndex("donationId");
+
+                    b.ToTable("member");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -226,6 +299,13 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.member", b =>
+                {
+                    b.HasOne("AidCare_The_Rise_Of_The_Aid.Models.donation", null)
+                        .WithMany("member")
+                        .HasForeignKey("donationId");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -275,6 +355,11 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.donation", b =>
+                {
+                    b.Navigation("member");
                 });
 #pragma warning restore 612, 618
         }

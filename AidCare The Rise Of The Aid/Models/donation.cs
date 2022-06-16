@@ -2,7 +2,7 @@
 {
     public class donation
     {
-        public int DonationId { get; set; }
+        public int donationId { get; set; }
         public string DonationDescription { get; set; }
         public int DonationAmount { get; set; }
         public ICollection <member> member { get; set; }
