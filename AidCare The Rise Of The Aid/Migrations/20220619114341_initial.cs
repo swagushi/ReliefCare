@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AidCare_The_Rise_Of_The_Aid.Migrations
 {
-    public partial class intial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -75,6 +75,21 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Event", x => x.EventId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "member",
+                columns: table => new
+                {
+                    memberId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_member", x => x.memberId);
                 });
 
             migrationBuilder.CreateTable(
@@ -184,24 +199,54 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "member",
+                name: "donationmember",
                 columns: table => new
                 {
+                    donationId = table.Column<int>(type: "int", nullable: false),
                     memberId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    donationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_member", x => x.memberId);
+                    table.PrimaryKey("PK_donationmember", x => new { x.donationId, x.memberId });
                     table.ForeignKey(
-                        name: "FK_member_donation_donationId",
+                        name: "FK_donationmember_donation_donationId",
                         column: x => x.donationId,
                         principalTable: "donation",
-                        principalColumn: "donationId");
+                        principalColumn: "donationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_donationmember_member_memberId",
+                        column: x => x.memberId,
+                        principalTable: "member",
+                        principalColumn: "memberId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "memberevent",
+                columns: table => new
+                {
+                    membereventId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    membereventName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    memberId = table.Column<int>(type: "int", nullable: false),
+                    EventId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_memberevent", x => x.membereventId);
+                    table.ForeignKey(
+                        name: "FK_memberevent_Event_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Event",
+                        principalColumn: "EventId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_memberevent_member_memberId",
+                        column: x => x.memberId,
+                        principalTable: "member",
+                        principalColumn: "memberId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -244,9 +289,19 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_member_donationId",
-                table: "member",
-                column: "donationId");
+                name: "IX_donationmember_memberId",
+                table: "donationmember",
+                column: "memberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_memberevent_EventId",
+                table: "memberevent",
+                column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_memberevent_memberId",
+                table: "memberevent",
+                column: "memberId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -267,10 +322,10 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Event");
+                name: "donationmember");
 
             migrationBuilder.DropTable(
-                name: "member");
+                name: "memberevent");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -280,6 +335,12 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
 
             migrationBuilder.DropTable(
                 name: "donation");
+
+            migrationBuilder.DropTable(
+                name: "Event");
+
+            migrationBuilder.DropTable(
+                name: "member");
         }
     }
 }

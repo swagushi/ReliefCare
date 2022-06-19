@@ -8,89 +8,89 @@ using Microsoft.EntityFrameworkCore;
 using AidCare_The_Rise_Of_The_Aid.Areas.Identity.Data;
 using AidCare_The_Rise_Of_The_Aid.Models;
 
-namespace AidCare_The_Rise_Of_The_Aid.Views
+namespace AidCare_The_Rise_Of_The_Aid.Controllers
 {
-    public class EventsController : Controller
+    public class membersController : Controller
     {
         private readonly AidCareContext _context;
 
-        public EventsController(AidCareContext context)
+        public membersController(AidCareContext context)
         {
             _context = context;
         }
 
-        // GET: Events
+        // GET: members
         public async Task<IActionResult> Index()
         {
-              return _context.Event != null ? 
-                          View(await _context.Event.ToListAsync()) :
-                          Problem("Entity set 'AidCareContext.Event'  is null.");
+              return _context.member != null ? 
+                          View(await _context.member.ToListAsync()) :
+                          Problem("Entity set 'AidCareContext.member'  is null.");
         }
 
-        // GET: Events/Details/5
+        // GET: members/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Event == null)
+            if (id == null || _context.member == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Event
-                .FirstOrDefaultAsync(m => m.EventId == id);
-            if (@event == null)
+            var member = await _context.member
+                .FirstOrDefaultAsync(m => m.memberId == id);
+            if (member == null)
             {
                 return NotFound();
             }
 
-            return View(@event);
+            return View(member);
         }
 
-        // GET: Events/Create
+        // GET: members/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Events/Create
+        // POST: members/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventId,EventName,EventLocation,DateTime")] Event @event)
+        public async Task<IActionResult> Create([Bind("memberId,FirstName,LastName,DateTime")] member member)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(@event);
+                _context.Add(member);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(@event);
+            return View(member);
         }
 
-        // GET: Events/Edit/5
+        // GET: members/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Event == null)
+            if (id == null || _context.member == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Event.FindAsync(id);
-            if (@event == null)
+            var member = await _context.member.FindAsync(id);
+            if (member == null)
             {
                 return NotFound();
             }
-            return View(@event);
+            return View(member);
         }
 
-        // POST: Events/Edit/5
+        // POST: members/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventId,EventName,EventLocation,DateTime")] Event @event)
+        public async Task<IActionResult> Edit(int id, [Bind("memberId,FirstName,LastName,DateTime")] member member)
         {
-            if (id != @event.EventId)
+            if (id != member.memberId)
             {
                 return NotFound();
             }
@@ -99,12 +99,12 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
             {
                 try
                 {
-                    _context.Update(@event);
+                    _context.Update(member);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventExists(@event.EventId))
+                    if (!memberExists(member.memberId))
                     {
                         return NotFound();
                     }
@@ -115,49 +115,49 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(@event);
+            return View(member);
         }
 
-        // GET: Events/Delete/5
+        // GET: members/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Event == null)
+            if (id == null || _context.member == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Event
-                .FirstOrDefaultAsync(m => m.EventId == id);
-            if (@event == null)
+            var member = await _context.member
+                .FirstOrDefaultAsync(m => m.memberId == id);
+            if (member == null)
             {
                 return NotFound();
             }
 
-            return View(@event);
+            return View(member);
         }
 
-        // POST: Events/Delete/5
+        // POST: members/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Event == null)
+            if (_context.member == null)
             {
-                return Problem("Entity set 'AidCareContext.Event'  is null.");
+                return Problem("Entity set 'AidCareContext.member'  is null.");
             }
-            var @event = await _context.Event.FindAsync(id);
-            if (@event != null)
+            var member = await _context.member.FindAsync(id);
+            if (member != null)
             {
-                _context.Event.Remove(@event);
+                _context.member.Remove(member);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EventExists(int id)
+        private bool memberExists(int id)
         {
-          return (_context.Event?.Any(e => e.EventId == id)).GetValueOrDefault();
+          return (_context.member?.Any(e => e.memberId == id)).GetValueOrDefault();
         }
     }
 }

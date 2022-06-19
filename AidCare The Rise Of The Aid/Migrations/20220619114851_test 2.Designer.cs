@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AidCare_The_Rise_Of_The_Aid.Migrations
 {
     [DbContext(typeof(AidCareContext))]
-    [Migration("20220616212423_intial ")]
-    partial class intial
+    [Migration("20220619114851_test 2")]
+    partial class test2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,14 +152,51 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("donationId")
-                        .HasColumnType("int");
-
                     b.HasKey("memberId");
 
-                    b.HasIndex("donationId");
-
                     b.ToTable("member");
+                });
+
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.memberevent", b =>
+                {
+                    b.Property<int>("membereventId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("membereventId"), 1L, 1);
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("memberId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("membereventName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("membereventId");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("memberId");
+
+                    b.ToTable("memberevent");
+                });
+
+            modelBuilder.Entity("donationmember", b =>
+                {
+                    b.Property<int>("donationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("memberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("donationId", "memberId");
+
+                    b.HasIndex("memberId");
+
+                    b.ToTable("donationmember");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -299,11 +336,38 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.member", b =>
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.memberevent", b =>
+                {
+                    b.HasOne("AidCare_The_Rise_Of_The_Aid.Models.Event", "Event")
+                        .WithMany("memberevent")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AidCare_The_Rise_Of_The_Aid.Models.member", "member")
+                        .WithMany("memberevent")
+                        .HasForeignKey("memberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("member");
+                });
+
+            modelBuilder.Entity("donationmember", b =>
                 {
                     b.HasOne("AidCare_The_Rise_Of_The_Aid.Models.donation", null)
-                        .WithMany("member")
-                        .HasForeignKey("donationId");
+                        .WithMany()
+                        .HasForeignKey("donationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AidCare_The_Rise_Of_The_Aid.Models.member", null)
+                        .WithMany()
+                        .HasForeignKey("memberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -357,9 +421,14 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.donation", b =>
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.Event", b =>
                 {
-                    b.Navigation("member");
+                    b.Navigation("memberevent");
+                });
+
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.member", b =>
+                {
+                    b.Navigation("memberevent");
                 });
 #pragma warning restore 612, 618
         }

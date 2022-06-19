@@ -6,6 +6,7 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateTime { get; set; }
-
+        public ICollection<memberevent> memberevent { get; set; }
+        public ICollection<donation> donation { get; set; }
     }
 }
