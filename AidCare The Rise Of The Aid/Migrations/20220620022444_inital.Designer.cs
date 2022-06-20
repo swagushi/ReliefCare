@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AidCare_The_Rise_Of_The_Aid.Migrations
 {
     [DbContext(typeof(AidCareContext))]
-    [Migration("20220619114851_test 2")]
-    partial class test2
+    [Migration("20220620022444_inital")]
+    partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

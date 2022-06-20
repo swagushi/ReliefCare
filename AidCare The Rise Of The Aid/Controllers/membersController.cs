@@ -95,7 +95,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
