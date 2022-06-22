@@ -20,17 +20,27 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
         }
 
         // GET: members
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-              return _context.member != null ? 
-                          View(await _context.member.ToListAsync()) :
-                          Problem("Entity set 'AidCareContext.member'  is null.");
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            var members = from s in _context.member
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    members = members.OrderByDescending(s => s.LastName);
+                    break;
+                    members = members.OrderBy(s => s.LastName);
+                    break;
+            }
+            return View(await members.AsNoTracking().ToListAsync());
         }
-
+  
         // GET: members/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.member == null)
+            if (id == null || _context.member  == null)
             {
                 return NotFound();
             }
