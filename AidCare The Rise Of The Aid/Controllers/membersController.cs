@@ -20,10 +20,24 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
         }
 
         // GET: members
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(
+    string sortOrder,
+    string currentFilter,
+    string searchString,
+    int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
             var members = from s in _context.member
                            select s;
             switch (sortOrder)
@@ -34,7 +48,8 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
                     members = members.OrderBy(s => s.LastName);
                     break;
             }
-            return View(await members.AsNoTracking().ToListAsync());
+            int pageSize = 3;
+            return View(await PaginatedList<member>.CreateAsync(members.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
   
         // GET: members/Details/5
