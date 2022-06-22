@@ -9,5 +9,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the AidCareUser class
 public class AidCareUser : IdentityUser
 {
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
 }
 

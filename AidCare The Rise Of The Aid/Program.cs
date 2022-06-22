@@ -7,7 +7,7 @@ var connectionString = builder.Configuration.GetConnectionString("AidCareContext
 builder.Services.AddDbContext<AidCareContext>(options =>
     options.UseSqlServer(connectionString));;
 
-builder.Services.AddDefaultIdentity<AidCareUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<AidCareUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<AidCareContext>();;
 
 // Add services to the container.
