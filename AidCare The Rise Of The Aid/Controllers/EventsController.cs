@@ -20,11 +20,28 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
         }
 
         // GET: Events
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-              return _context.Event != null ? 
-                          View(await _context.Event.ToListAsync()) :
-                          Problem("Entity set 'AidCareContext.Event'  is null.");
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            var students = from s in _context.Event
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    students = students.OrderByDescending(s => s.EventLocation);
+                    break;
+                case "Date":
+                    students = students.OrderBy(s => s.EventName);
+                    break;
+                case "date_desc":
+                    students = students.OrderByDescending(s => s.EventLocation);
+                    break;
+                default:
+                    students = students.OrderBy(s => s.EventName);
+                    break;
+            }
+            return View(await students.AsNoTracking().ToListAsync());
         }
 
         // GET: Events/Details/5

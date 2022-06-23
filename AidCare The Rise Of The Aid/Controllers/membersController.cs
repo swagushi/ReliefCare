@@ -45,6 +45,13 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
                 case "name_desc":
                     members = members.OrderByDescending(s => s.LastName);
                     break;
+                case "Date":
+                    members = members.OrderBy(s => s.DateTime);
+                    break;
+                case "date_desc":
+                    members = members.OrderByDescending(s => s.DateTime);
+                    break;
+                default:
                     members = members.OrderBy(s => s.LastName);
                     break;
             }
