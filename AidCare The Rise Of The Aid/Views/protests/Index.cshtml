@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AidCare_The_Rise_Of_The_Aid.Models.protest>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProtestName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProtestLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProtestName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProtestLocation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.protestId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.protestId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.protestId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

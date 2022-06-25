@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AidCare_The_Rise_Of_The_Aid.Migrations
 {
-    public partial class initial : Migration
+    public partial class intial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,21 +65,6 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Event",
-                columns: table => new
-                {
-                    EventId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EventName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EventLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Event", x => x.EventId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "member",
                 columns: table => new
                 {
@@ -92,6 +77,21 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_member", x => x.memberId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "protest",
+                columns: table => new
+                {
+                    protestId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProtestName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProtestLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_protest", x => x.protestId);
                 });
 
             migrationBuilder.CreateTable(
@@ -232,22 +232,22 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     membereventName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     memberId = table.Column<int>(type: "int", nullable: false),
-                    EventId = table.Column<int>(type: "int", nullable: false)
+                    protestId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_memberevent", x => x.membereventId);
                     table.ForeignKey(
-                        name: "FK_memberevent_Event_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Event",
-                        principalColumn: "EventId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_memberevent_member_memberId",
                         column: x => x.memberId,
                         principalTable: "member",
                         principalColumn: "memberId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_memberevent_protest_protestId",
+                        column: x => x.protestId,
+                        principalTable: "protest",
+                        principalColumn: "protestId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -296,14 +296,14 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                 column: "memberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_memberevent_EventId",
-                table: "memberevent",
-                column: "EventId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_memberevent_memberId",
                 table: "memberevent",
                 column: "memberId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_memberevent_protestId",
+                table: "memberevent",
+                column: "protestId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -339,10 +339,10 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                 name: "donation");
 
             migrationBuilder.DropTable(
-                name: "Event");
+                name: "member");
 
             migrationBuilder.DropTable(
-                name: "member");
+                name: "protest");
         }
     }
 }

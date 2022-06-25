@@ -27,7 +27,8 @@ public class AidCareContext : IdentityDbContext<AidCareUser>
 
     public DbSet<AidCare_The_Rise_Of_The_Aid.Models.donation>? donation { get; set; }
 
-    public DbSet<AidCare_The_Rise_Of_The_Aid.Models.Event>? Event { get; set; }
+    public DbSet<AidCare_The_Rise_Of_The_Aid.Models.protest>? protest { get; set; }
+
 }
 
 internal class ApplicationUserEntityConfiguration : IEntityTypeConfiguration<AidCareUser>

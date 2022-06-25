@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AidCare_The_Rise_Of_The_Aid.Migrations
 {
     [DbContext(typeof(AidCareContext))]
-    [Migration("20220623060358_added sorting to Events tab")]
-    partial class addedsortingtoEventstab
+    [Migration("20220625011737_intial")]
+    partial class intial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -119,30 +119,6 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                     b.ToTable("donation");
                 });
 
-            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.Event", b =>
-                {
-                    b.Property<int>("EventId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventId"), 1L, 1);
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EventLocation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EventName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EventId");
-
-                    b.ToTable("Event");
-                });
-
             modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.member", b =>
                 {
                     b.Property<int>("memberId")
@@ -175,9 +151,6 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("membereventId"), 1L, 1);
 
-                    b.Property<int>("EventId")
-                        .HasColumnType("int");
-
                     b.Property<int>("memberId")
                         .HasColumnType("int");
 
@@ -185,13 +158,40 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("membereventId");
+                    b.Property<int>("protestId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("EventId");
+                    b.HasKey("membereventId");
 
                     b.HasIndex("memberId");
 
+                    b.HasIndex("protestId");
+
                     b.ToTable("memberevent");
+                });
+
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.protest", b =>
+                {
+                    b.Property<int>("protestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("protestId"), 1L, 1);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ProtestLocation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProtestName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("protestId");
+
+                    b.ToTable("protest");
                 });
 
             modelBuilder.Entity("donationmember", b =>
@@ -348,21 +348,21 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
 
             modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.memberevent", b =>
                 {
-                    b.HasOne("AidCare_The_Rise_Of_The_Aid.Models.Event", "Event")
-                        .WithMany("memberevent")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("AidCare_The_Rise_Of_The_Aid.Models.member", "member")
                         .WithMany("memberevent")
                         .HasForeignKey("memberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Event");
+                    b.HasOne("AidCare_The_Rise_Of_The_Aid.Models.protest", "protest")
+                        .WithMany("memberevent")
+                        .HasForeignKey("protestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("member");
+
+                    b.Navigation("protest");
                 });
 
             modelBuilder.Entity("donationmember", b =>
@@ -431,12 +431,12 @@ namespace AidCare_The_Rise_Of_The_Aid.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.Event", b =>
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.member", b =>
                 {
                     b.Navigation("memberevent");
                 });
 
-            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.member", b =>
+            modelBuilder.Entity("AidCare_The_Rise_Of_The_Aid.Models.protest", b =>
                 {
                     b.Navigation("memberevent");
                 });

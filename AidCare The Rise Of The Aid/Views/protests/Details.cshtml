@@ -1,27 +1,26 @@
-﻿@model AidCare_The_Rise_Of_The_Aid.Models.Event
+﻿@model AidCare_The_Rise_Of_The_Aid.Models.protest
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Details</h1>
 
 <div>
-    <h4>Event</h4>
+    <h4>protest</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EventName)
+            @Html.DisplayNameFor(model => model.ProtestName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EventName)
+            @Html.DisplayFor(model => model.ProtestName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EventLocation)
+            @Html.DisplayNameFor(model => model.ProtestLocation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EventLocation)
+            @Html.DisplayFor(model => model.ProtestLocation)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DateTime)
@@ -32,6 +31,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.EventId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.protestId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

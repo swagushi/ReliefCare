@@ -1,28 +1,27 @@
-﻿@model AidCare_The_Rise_Of_The_Aid.Models.Event
+﻿@model AidCare_The_Rise_Of_The_Aid.Models.protest
 
 @{
     ViewData["Title"] = "Delete";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Delete</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Event</h4>
+    <h4>protest</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EventName)
+            @Html.DisplayNameFor(model => model.ProtestName)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EventName)
+            @Html.DisplayFor(model => model.ProtestName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EventLocation)
+            @Html.DisplayNameFor(model => model.ProtestLocation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EventLocation)
+            @Html.DisplayFor(model => model.ProtestLocation)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.DateTime)
@@ -33,7 +32,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="EventId" />
+        <input type="hidden" asp-for="protestId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
