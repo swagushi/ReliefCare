@@ -20,9 +20,24 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
         }
 
         // GET: donations
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(
+     string sortOrder,
+     string currentFilter,
+     string searchString,
+     int? pageNumber)
         {
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
             var donations = from s in _context.donation
                             select s;
             switch (sortOrder)
@@ -40,7 +55,8 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
                     donations = donations.OrderBy(s => s.DonationAmount);
                     break;
             }
-            return View(await donations.AsNoTracking().ToListAsync());
+            int pageSize = 3;
+            return View(await PaginatedList<donation>.CreateAsync(donations.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: donations/Details/5
