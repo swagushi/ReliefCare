@@ -20,11 +20,43 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
         }
 
         // GET: protests
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+      string sortOrder,
+      string currentFilter,
+      string searchString,
+      int? pageNumber)
         {
-              return _context.protest != null ? 
-                          View(await _context.protest.ToListAsync()) :
-                          Problem("Entity set 'AidCareContext.protest'  is null.");
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            var protests = from s in _context.protest
+                           select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    protests = protests.OrderByDescending(s => s.ProtestLocation);
+                    break;
+                case "Date":
+                    protests = protests.OrderBy(s => s.DateTime);
+                    break;
+                case "date_desc":
+                    protests = protests.OrderByDescending(s => s.ProtestLocation);
+                    break;
+                default:
+                    protests = protests.OrderBy(s => s.DateTime);
+                    break;
+            }
+            int pageSize = 3;
+            return View(await PaginatedList<protest>.CreateAsync(protests.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: protests/Details/5
