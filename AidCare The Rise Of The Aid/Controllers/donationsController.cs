@@ -20,11 +20,27 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
         }
 
         // GET: donations
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-              return _context.donation != null ? 
-                          View(await _context.donation.ToListAsync()) :
-                          Problem("Entity set 'AidCareContext.donation'  is null.");
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            var donations = from s in _context.donation
+                            select s;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    donations = donations.OrderByDescending(s => s.DonationDescription);
+                    break;
+                case "Date":
+                    donations = donations.OrderBy(s => s.DonationAmount);
+                    break;
+                case "date_desc":
+                    donations = donations.OrderByDescending(s => s.DonationDescription);
+                    break;
+                default:
+                    donations = donations.OrderBy(s => s.DonationAmount);
+                    break;
+            }
+            return View(await donations.AsNoTracking().ToListAsync());
         }
 
         // GET: donations/Details/5

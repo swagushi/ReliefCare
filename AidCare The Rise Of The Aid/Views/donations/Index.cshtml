@@ -12,13 +12,15 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DonationDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DonationAmount)
-            </th>
+       <tr>
+                <th>
+                     <a asp-action="Index" asp-route-sortOrder="@ViewData["DescriptionsortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Donation Description</a>
+                </th>
+                <th>
+                </th>
+                <th>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["IntSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Donation Amount</a>
+                </th>
             <th></th>
         </tr>
     </thead>
