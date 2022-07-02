@@ -40,6 +40,11 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
 
             var protests = from s in _context.protest
                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                protests = protests.Where(s => s.ProtestName.Contains(searchString)
+                                       || s.ProtestLocation.Contains(searchString));
+            }
             switch (sortOrder)
             {
                 case "name_desc":

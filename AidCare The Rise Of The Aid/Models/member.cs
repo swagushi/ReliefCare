@@ -12,7 +12,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Models
 
         [Display(Name = "Last Name"), Required, MaxLength(50)]
         public string LastName { get; set; }
-        [Display(Name = "Date Registered"), MaxLength(50)]
+        [Display(Name = "Date Registered"),] 
         public DateTime DateTime { get; set; }
         public ICollection<memberevent> memberevent { get; set; }
         public ICollection<donation> donation { get; set; }
