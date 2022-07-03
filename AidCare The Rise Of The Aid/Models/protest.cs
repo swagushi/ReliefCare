@@ -11,7 +11,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Models
         [Display(Name = "Event Location"), Required, MaxLength(50)]
         [StringLength(30, MinimumLength = 10)]
         public string ProtestLocation { get; set; }
-        [Display(Name = "Event Date and Time"),]
+        [Display(Name = "Event Date and Time"), Required, MaxLength(50)]
 
         public DateTime DateTime { get; set; }
         public ICollection<memberevent> memberevent { get; set; }
