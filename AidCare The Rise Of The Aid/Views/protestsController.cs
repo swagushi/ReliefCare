@@ -51,13 +51,13 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
                     protests = protests.OrderByDescending(s => s.ProtestLocation);
                     break;
                 case "Date":
-                    protests = protests.OrderBy(s => s.DateTime);
+                    protests = protests.OrderBy(s => s.ProtestDate);
                     break;
                 case "date_desc":
                     protests = protests.OrderByDescending(s => s.ProtestLocation);
                     break;
                 default:
-                    protests = protests.OrderBy(s => s.DateTime);
+                    protests = protests.OrderBy(s => s.ProtestDate);
                     break;
             }
             int pageSize = 3;
@@ -93,7 +93,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("protestId,ProtestName,ProtestLocation,DateTime")] protest protest)
+        public async Task<IActionResult> Create([Bind("protestId,ProtestName,ProtestLocation,ProtestDate")] protest protest)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Views
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("protestId,ProtestName,ProtestLocation,DateTime")] protest protest)
+        public async Task<IActionResult> Edit(int id, [Bind("protestId,ProtestName,ProtestLocation,ProtestDate")] protest protest)
         {
             if (id != protest.protestId)
             {
