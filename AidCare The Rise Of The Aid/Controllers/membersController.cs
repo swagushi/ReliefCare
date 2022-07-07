@@ -46,10 +46,10 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
                     members = members.OrderByDescending(s => s.LastName);
                     break;
                 case "Date":
-                    members = members.OrderBy(s => s.DateTime);
+                    members = members.OrderBy(s => s.RegisteredDate);
                     break;
                 case "date_desc":
-                    members = members.OrderByDescending(s => s.DateTime);
+                    members = members.OrderByDescending(s => s.RegisteredDate);
                     break;
                 default:
                     members = members.OrderBy(s => s.LastName);
@@ -88,7 +88,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("memberId,FirstName,LastName,DateTime")] member member)
+        public async Task<IActionResult> Create([Bind("memberId,FirstName,LastName,RegisteredDate")] member member)
         {
             if (!ModelState.IsValid)
             {
@@ -120,7 +120,7 @@ namespace AidCare_The_Rise_Of_The_Aid.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("memberId,FirstName,LastName,DateTime")] member member)
+        public async Task<IActionResult> Edit(int id, [Bind("memberId,FirstName,LastName,RegisteredDate")] member member)
         {
             if (id != member.memberId)
             {

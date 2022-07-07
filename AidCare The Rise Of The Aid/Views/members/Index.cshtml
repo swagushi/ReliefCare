@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Members</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Member</a>
 </p>
 <table class="table">
     <thead>
@@ -41,7 +41,7 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DateTime)
+                @Html.DisplayFor(modelItem => item.RegisteredDate)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.memberId"></a> 
